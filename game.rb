@@ -67,6 +67,8 @@ def update_player
   end
 
   $player.health_text.text = $player.health
+
+  # Handles jumping and gravity
   if !on_platform?($player)
     $player.velocityY -= GRAVITY
     $player.y -= $player.velocityY

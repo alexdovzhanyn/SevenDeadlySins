@@ -1,4 +1,4 @@
-class Platform < Collidable
+class Collidable < Rectangle
 
 	def initialize(opts={})
 		super(opts)

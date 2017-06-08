@@ -1,18 +1,20 @@
 require 'ruby2d'
 require 'pry'
 
+require_relative 'collidable'
 require_relative 'levels/level'
 require_relative 'player'
 require_relative 'platform'
+require_relative 'damage_block'
 
 # Load levels
 Dir["./levels/*.rb"].each {|file| require_relative file }
 
 WINDOW_WIDTH = 1240
 WINDOW_HEIGHT = 600
+GRAVITY = 0.6
 
 BASE_HEIGHT = 25
-UPDATE_EVERY_FRAMES = 1 
 
 set ({
   title: 'Seven Deadly Sins',
@@ -21,16 +23,25 @@ set ({
   background: '#99ccff'
 })
 
-$player = Player.new({x: (WINDOW_WIDTH/2 - Player::WIDTH/2), y: (WINDOW_HEIGHT - BASE_HEIGHT * 2 - Player::HEIGHT), z: 1, height: Player::HEIGHT, width: Player::WIDTH, color: 'red'})
+$player = Player.new({x: (WINDOW_WIDTH/2 - Player::WIDTH/2), y: (WINDOW_HEIGHT - BASE_HEIGHT * 2 - Player::HEIGHT), z: 1, height: Player::HEIGHT, width: Player::WIDTH, color: 'red', health: 100})
 Town.new
 
 update do
-  update_player
-end
+  if $player.health > 0
+    update_player
+  else
+    clear
 
-def gravity_pull(entity)
-  if !on_platform?(entity)
-    entity.y += 10
+    set({
+      background: '#000000'
+    })
+
+    game_end_text = Text.new({x: WINDOW_WIDTH/2, y: WINDOW_HEIGHT/2, z: 0, font: '/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf', text: 'You Died :(', color: '#ff0000', size: 80})
+    
+
+    # Reposition text after we know its height & width to center it
+    game_end_text.x = WINDOW_WIDTH/2 - game_end_text.width/2
+    game_end_text.y = WINDOW_HEIGHT/2 - game_end_text.height/2
   end
 end
 
@@ -39,7 +50,7 @@ def on_platform?(entity)
   # This collision check only cares whether the bottom of the entity is within the bounding box of the platform
   # Returns the platform if the player is on one
   bottomOfEntity = entity.height + entity.y
-  Application.get(:window).objects.select{|object| object.class == Platform}.each do |platform|
+  Application.get(:window).objects.select{|object| object.kind_of? Platform}.each do |platform|
     if entity.x < platform.x + platform.width && entity.x + entity.width > platform.x && bottomOfEntity < platform.y + platform.height && bottomOfEntity >= platform.y
       return platform
     end
@@ -49,10 +60,18 @@ def on_platform?(entity)
 end
 
 def update_player
-  if $player.jumping
-    $player.y -= Player::JUMP_SPEED
+  # Check to see if player should be taking damage
+  colliding_object = $player.colliding?
+  if colliding_object && colliding_object.respond_to?(:damage)
+    $player.health -= colliding_object.damage
+  end
+
+  $player.health_text.text = $player.health
+  if !on_platform?($player)
+    $player.velocityY -= GRAVITY
+    $player.y -= $player.velocityY
   else
-    gravity_pull($player)
+    $player.velocityY = 0
   end
 end
 
@@ -67,7 +86,7 @@ on :key_down do |e|
     when "d"
       $player.move_right
     when "space"
-      unless $player.jumping || !on_platform?($player)
+      unless !on_platform?($player)
         $player.toggle_jump
       end
     when "left shift" 
@@ -90,7 +109,7 @@ on :key_held do |e|
     when 'd'
       $player.move_right
     when "space"
-      unless $player.jumping || !on_platform?($player)
+      unless !on_platform?($player)
         $player.toggle_jump
       end
   end

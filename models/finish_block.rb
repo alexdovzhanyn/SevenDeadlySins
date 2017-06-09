@@ -1,4 +1,4 @@
-class FinishBlock < Rectangle
+class FinishBlock < Collidable
 
 	def initialize(opts={})
 		super(opts)

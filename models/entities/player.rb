@@ -10,8 +10,8 @@ class Player < Rectangle
   def initialize(opts={})
     super(opts)
 
-    Text.new({x: 10, y: 10, z: 0, font: '/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf', text: opts[:name] || 'Player'})
-    @health_text = Text.new({x: 10, y: 30, z: 0, font: '/usr/share/fonts/truetype/ubuntu-font-family/Ubuntu-B.ttf', text: opts[:health]})
+    Text.new({x: 10, y: 10, z: 0, font: './assets/fonts/Ubuntu-B.ttf', text: opts[:name] || 'Player'})
+    @health_text = Text.new({x: 10, y: 30, z: 0, font: './assets/fonts/Ubuntu-B.ttf', text: opts[:health]})
     @jumping = false
     @velocityY = 0
     @health = opts[:health]

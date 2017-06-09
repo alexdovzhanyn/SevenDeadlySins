@@ -8,8 +8,9 @@ $player = Player.new({
   z: 1, 
   height: Player::HEIGHT, 
   width: Player::WIDTH, 
-  color: 'red', 
-  health: 100
+  # color: 'red', 
+  health: 100,
+  path: './assets/sprites/theus.png'
 })
 
 show

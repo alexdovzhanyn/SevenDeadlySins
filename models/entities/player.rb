@@ -1,4 +1,4 @@
-class Player < Rectangle
+class Player < Image
 
   attr_accessor :jumping, :velocityY, :current_platform, :health, :health_text
 
@@ -15,6 +15,9 @@ class Player < Rectangle
     @jumping = false
     @velocityY = 0
     @health = opts[:health]
+
+    self.width = self.width * 5
+    self.height = self.height * 5
   end
 
   def move_left

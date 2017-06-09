@@ -3,8 +3,8 @@ class Town < Level
 
 	def initialize
 		@constant_objects = [
-			Platform.new({x: 0, y: (WINDOW_HEIGHT - BASE_HEIGHT), z: 0, height: BASE_HEIGHT, width: 1000, color: '#008000'}),
-			Platform.new({x: 300, y: 400, z: 0, height: BASE_HEIGHT, width: 200, color: '#008000'}),
+			Platform.new({x: 0, y: (WINDOW_HEIGHT - BASE_HEIGHT), z: 0, height: BASE_HEIGHT, width: 1000, color: '#008000', sprite: './assets/sprites/grass_platform.png'}),
+			Platform.new({x: 300, y: 400, z: 0, height: BASE_HEIGHT, width: 200, color: '#008000', sprite: './assets/sprites/grass_platform.png'}),
 			Platform.new({x: 800, y: 250, z: 0, height: BASE_HEIGHT, width: 200, color: '#008000'}),
 			Platform.new({x: 1400, y: 250, z: 0, height: BASE_HEIGHT, width: 300, color: '#008000'}),
 			Platform.new({x: 2100, y: 500, z: 0, height: 100, width: 600, color: '#008000'}),

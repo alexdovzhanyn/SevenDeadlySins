@@ -16,6 +16,12 @@ class Camera
 		level.constant_objects.each do |object|
 			object.x += x
 			object.y += y
+
+			# Update the objects sprite if it has one
+			if object.respond_to?(:sprite) && object.sprite
+				object.sprite.x += x
+				object.sprite.y += y
+			end
 		end
 
 		level.x += x

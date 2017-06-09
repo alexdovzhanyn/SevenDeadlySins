@@ -1,11 +1,12 @@
 class Player < Rectangle
+
+  attr_accessor :jumping, :velocityY, :current_platform, :health, :health_text
+
   MOVEMENT_SPEED = 10
   JUMP_SPEED = 20
   HEIGHT = 120
   WIDTH = 60
   
-  attr_accessor :jumping, :velocityY, :current_platform, :health, :health_text
-
   def initialize(opts={})
     super(opts)
 
@@ -17,14 +18,19 @@ class Player < Rectangle
   end
 
   def move_left
-    # Prevent from walking off of level
-    unless self.x <= 0
+    # Disable player movement if they are triggering the camera to move, so that the player can never
+    # accidentally cause infinite walking
+    unless self.x < 200
       self.x -= MOVEMENT_SPEED
     end
   end
 
   def move_right
-    self.x += MOVEMENT_SPEED
+    # Disable player movement if they are triggering the camera to move, so that the player can never
+    # accidentally cause infinite walking
+    unless self.x + self.width > WINDOW_WIDTH - 500
+      self.x += MOVEMENT_SPEED
+    end
   end
 
   def toggle_jump

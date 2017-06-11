@@ -6,8 +6,10 @@ update do
     $game_end_text.color = [1,0,0,1]
 
     # Reposition text after we know its height & width to center it
-    $game_end_text.x = WINDOW_WIDTH/2 - $game_end_text.width/2
-    $game_end_text.y = WINDOW_HEIGHT/2 - $game_end_text.height/2
+    $game_end_text.x = units_to_pixels(WINDOW_WIDTH/2) - $game_end_text.width/2
+    $game_end_text.y = units_to_pixels(WINDOW_HEIGHT/2) - $game_end_text.height/2
+    $game_end_bg.x = $camera.x
+    $game_end_bg.y = $camera.y
   end
 end
 
@@ -32,9 +34,9 @@ end
 def update_camera
   if $camera.should_move?($player)
     if $camera.should_move?($player) == 'Left'
-      $camera.move(Player::MOVEMENT_SPEED, 0, $level)
+      $camera.move(units_to_pixels(Player::MOVEMENT_SPEED), 0, $level)
     elsif $camera.should_move?($player) == 'Right'
-      $camera.move(-Player::MOVEMENT_SPEED, 0, $level)
+      $camera.move(units_to_pixels(-Player::MOVEMENT_SPEED), 0, $level)
     end
   end
 end

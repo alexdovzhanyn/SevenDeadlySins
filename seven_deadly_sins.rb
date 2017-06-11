@@ -4,10 +4,10 @@ $level = Town.new
 
 $player = Player.new({
   x: $level.spawn_point[:x], 
-  y: $level.spawn_point[:y] - Player::HEIGHT, 
+  y: $level.spawn_point[:y] - units_to_pixels(Player::HEIGHT), 
   z: 1, 
-  height: Player::HEIGHT, 
-  width: Player::WIDTH, 
+  height: units_to_pixels(Player::HEIGHT), 
+  width: units_to_pixels(Player::WIDTH), 
   # color: 'red', 
   health: 100,
   path: './assets/sprites/theus.png'

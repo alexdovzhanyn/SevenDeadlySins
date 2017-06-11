@@ -9,4 +9,4 @@
 
 > In order to get up and running with this, you'll need to either download the compiled binary for your OS once it becomes available, or build it from this repo. In the case that you need to build it, just clone this repository, and follow the setup instructions for the ruby2d framework as specified at http://www.ruby2d.com/.
 
-> Once you've done that, just run `bundle install` and then `ruby game.rb`.
+> Once you've done that, just run `bundle install` and then `ruby seven_deadly_sins.rb`.

@@ -3,9 +3,9 @@ def on_platform?(entity)
   # This collision check only cares whether the bottom of the entity is within the bounding box of the platform
   # Returns the platform if the player is on one
   bottomOfEntity = entity.height + entity.y
-  Application.get(:window).objects.select{|object| object.kind_of? Platform}.each do |platform|
-    if entity.x < platform.x + platform.width && entity.x + entity.width > platform.x && bottomOfEntity < platform.y + platform.height && bottomOfEntity >= platform.y
-      return platform
+  Application.get(:window).objects.select{|object| object.kind_of? Collidable}.each do |object|
+    if !object.prevent_collision && entity.x < object.x + object.width && entity.x + entity.width > object.x && bottomOfEntity < object.y + object.height && bottomOfEntity >= object.y
+      return object
     end
   end
 
@@ -16,3 +16,7 @@ end
 # def colliding?(rect1, rect2)
 #   return rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.height + rect1.y > rect2.y
 # end
+
+def units_to_pixels(units)
+  return units * 5
+end

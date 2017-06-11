@@ -14,8 +14,9 @@ on :key_down do |e|
           update_camera
         end
       when "space"
-        unless !on_platform?($player)
-          $player.toggle_jump
+        current_platform = on_platform?($player)
+        if current_platform
+          $player.toggle_jump(current_platform)
         end
       when "left shift" 
         current_platform = on_platform?($player)
@@ -45,10 +46,6 @@ on :key_held do |e|
         unless $player.x + $player.width >= $level.x + $level.width
           $player.move_right
           update_camera
-        end
-      when "space"
-        unless !on_platform?($player)
-          $player.toggle_jump
         end
     end
   end

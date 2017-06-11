@@ -14,6 +14,7 @@ require_relative '../models/entities/player'
 
 # All other models
 Dir["./models/*.rb"].each {|file| require file }
+Dir["./models/entities/*.rb"].each {|file| require file }
 
 # Load levels
 Dir["./levels/*.rb"].each {|file| require file }
@@ -43,5 +44,9 @@ $camera = Camera.new({
   height: units_to_pixels(WINDOW_HEIGHT)
 })
 
-$game_end_bg = Rectangle.new(x: 0, y: 0, z: 2, width: units_to_pixels(WINDOW_WIDTH), height: units_to_pixels(WINDOW_HEIGHT), color: [0,0,0,0])
-$game_end_text = GameText.new({x: units_to_pixels(WINDOW_WIDTH/2), y: units_to_pixels(WINDOW_HEIGHT/2), z: 3, font: './assets/fonts/Ubuntu-B.ttf', text: 'You Died :(', color: [1,0,0,0], size: 80})
+$skybox = Skybox.new(x: 0, y: 0, z: -10, path: './assets/backgrounds/town.png')
+$skybox.width = units_to_pixels($skybox.width)
+$skybox.height = units_to_pixels($skybox.height)
+
+$game_end_bg = Rectangle.new(x: 0, y: 0, z: 100000, width: units_to_pixels(WINDOW_WIDTH), height: units_to_pixels(WINDOW_HEIGHT), color: [0,0,0,0])
+$game_end_text = GameText.new({x: units_to_pixels(WINDOW_WIDTH/2), y: units_to_pixels(WINDOW_HEIGHT/2), z: 100001, font: './assets/fonts/Ubuntu-B.ttf', text: 'You Died :(', color: [1,0,0,0], size: 80})

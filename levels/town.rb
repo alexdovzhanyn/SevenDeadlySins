@@ -68,6 +68,16 @@ class Town < Level
 			})
 		]
 
+		@entities = [
+			Humanoid.new({
+				name: 'Aurelion',
+				x: 120,
+				y: 100,
+				z: 1,
+				sprite: './assets/sprites/theus.png'
+			})
+		]
+
 		@spawn_point = {
 			x: units_to_pixels(100),
 			y: units_to_pixels(WINDOW_HEIGHT - BASE_HEIGHT - 20)

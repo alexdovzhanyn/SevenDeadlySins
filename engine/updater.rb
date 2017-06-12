@@ -15,16 +15,33 @@ end
 
 def update_player
   # Check to see if player should be taking damage
-  colliding_object = $player.colliding?
-  if colliding_object && colliding_object.respond_to?(:damage)
-    $player.health -= colliding_object.damage
+  if $player.colliding?
+    $player.colliding?.each do |collision|
+      if collision[:object].respond_to?(:damage)
+        $player.health -= collision[:object].damage
+      end
+    end
   end
 
   $player.health_text.text = $player.health > 0 ? $player.health : 0
 
   # Handles jumping and gravity
-  if !on_platform?($player)
+  if $player.can_move(:down)
     $player.velocityY -= GRAVITY
+
+    # Check if player should hit something between this frame and the next
+    # This is done by projecting the players position values in between frames
+    $player.velocityY.abs.ceil.times do |position|
+      temp_player = $player.clone
+      temp_player.y += position
+
+      if !temp_player.can_move(:down)
+        $player.y = temp_player.y
+        $player.velocityY = 0
+        break
+      end
+    end
+
     $player.y -= $player.velocityY
   else
     $player.velocityY = 0

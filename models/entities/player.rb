@@ -37,8 +37,8 @@ class Player < Image
     end
   end
 
-  def toggle_jump(platform)
-    self.y -= 15 + ((self.y + self.height) - platform.y)
+  def toggle_jump
+    self.y -= 15
     self.velocityY = 15
   end
 
@@ -46,15 +46,45 @@ class Player < Image
     self.y += platform.height
   end
 
-  def colliding?
-    # Returns false or the object a player is colliding with.
-    # Needs to be updated for handling multiple collisions at once
-    Application.get(:window).objects.select{|object| object.kind_of? Collidable}.each do |object|
-      if self.x < object.x + object.width && self.x + self.width > object.x && self.y < object.y + object.height && self.height + self.y > object.y
-        return object
+  def can_move(direction)
+    direction_map = {
+      up: 'top',
+      right: 'right',
+      down: 'bottom',
+      left: 'left'
+    }
+
+    allowed = true
+
+    if self.colliding?
+      self.colliding?.each do |collision|
+        unless collision[:side] != direction_map[direction] || collision[:object].respond_to?(:pass_through) && collision[:object].pass_through
+          allowed = false
+        end
       end
     end
 
-    return false
+    return allowed
+  end
+
+  def colliding?
+    # Returns false or the object a player is colliding with.
+    # Needs to be updated for handling multiple collisions at once
+    objects = []
+    Application.get(:window).objects.select{|object| object.kind_of? Collidable}.each do |object|
+      if self.x < object.x + object.width && self.x + self.width > object.x && self.y < object.y + object.height && self.height + self.y > object.y
+        if self.y + self.height <= object.y + 2
+          objects << {object: object, side: 'bottom'}
+        elsif self.y >= object.y + object.height #Players right side hit objects left
+          objects << {object: object, side: 'top'}
+        elsif self.x < object.x #Players head collided with objects bottom
+          objects << {object: object, side: 'right'}
+        else #Players foot collided with object top
+          objects << {object: object, side: 'left'}
+        end
+      end
+    end
+
+    return objects.empty? ? false : objects
   end
 end

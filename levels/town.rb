@@ -39,6 +39,22 @@ class Town < Level
 				color: '#008000',
 				tile: './assets/tiles/grass_top.png'
 			}),
+			Collidable.new({
+				x: units_to_pixels(320), 
+				y: units_to_pixels(80), 
+				z: 0, 
+				height: units_to_pixels(70), 
+				width: units_to_pixels(20), 
+				color: [0,0,0,1]
+			}),
+			Collidable.new({
+				x: units_to_pixels(320), 
+				y: units_to_pixels(-20), 
+				z: 0, 
+				height: units_to_pixels(50), 
+				width: units_to_pixels(20), 
+				color: [0,0,0,1]
+			}),
 			Platform.new({
 				x: 420, 
 				y: 120, 

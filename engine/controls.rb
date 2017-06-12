@@ -14,7 +14,6 @@ on :key_down do |e|
           update_camera
         end
       when "space"
-        # binding.pry
         if $player.can_move(:up) && $player.colliding?
           $player.toggle_jump
         end

@@ -58,7 +58,7 @@ class Player < Image
 
     if self.colliding?
       self.colliding?.each do |collision|
-        unless collision[:side] != direction_map[direction] || collision[:object].respond_to?(:pass_through) && collision[:object].pass_through
+        unless collision[:side] != direction_map[direction] || collision[:object].respond_to?(:prevent_collision) && collision[:object].prevent_collision
           allowed = false
         end
       end
@@ -68,18 +68,17 @@ class Player < Image
   end
 
   def colliding?
-    # Returns false or the object a player is colliding with.
-    # Needs to be updated for handling multiple collisions at once
+    # Returns false or the objects a player is colliding with.
     objects = []
     Application.get(:window).objects.select{|object| object.kind_of? Collidable}.each do |object|
       if self.x < object.x + object.width && self.x + self.width > object.x && self.y < object.y + object.height && self.height + self.y > object.y
-        if self.y + self.height <= object.y + 2
+        if self.y + self.height <= object.y + 1
           objects << {object: object, side: 'bottom'}
-        elsif self.y >= object.y + object.height #Players right side hit objects left
+        elsif self.y >= object.y + object.height
           objects << {object: object, side: 'top'}
-        elsif self.x < object.x #Players head collided with objects bottom
+        elsif self.x < object.x 
           objects << {object: object, side: 'right'}
-        else #Players foot collided with object top
+        else 
           objects << {object: object, side: 'left'}
         end
       end

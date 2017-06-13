@@ -72,15 +72,16 @@ class Player < Image
     objects = []
     Application.get(:window).objects.select{|object| object.kind_of? Collidable}.each do |object|
       if self.x < object.x + object.width && self.x + self.width > object.x && self.y < object.y + object.height && self.height + self.y > object.y
-        if self.y + self.height <= object.y + 1
+        if (self.y <= object.y + 1) && (self.y + self.height <= object.y + 1)
           objects << {object: object, side: 'bottom'}
-        elsif self.y >= object.y + object.height
+        elsif (self.y.ceil >= object.y) && (self.y.ceil >= object.y + object.height)
           objects << {object: object, side: 'top'}
-        elsif self.x < object.x 
-          objects << {object: object, side: 'right'}
-        else 
+        elsif (self.x > object.x) && (self.x + self.width > object.x + object.width)
           objects << {object: object, side: 'left'}
+        elsif (self.x < object.x) && (self.x + self.width < object.x + object.width)
+          objects << {object: object, side: 'right'} 
         end
+
       end
     end
 

@@ -42,6 +42,17 @@ def update_player
       end
     end
 
+    $player.velocityY.abs.ceil.times do |position|
+      temp_player = $player.clone
+      temp_player.y -= position
+
+      if !temp_player.can_move(:up)
+        $player.y = temp_player.y + 1
+        $player.velocityY = $player.velocityY > 0 ? 0 : $player.velocityY
+        break
+      end
+    end
+
     $player.y -= $player.velocityY
   else
     $player.velocityY = 0

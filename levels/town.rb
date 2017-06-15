@@ -84,19 +84,19 @@ class Town < Level
 			})
 		]
 
-		@entities = [
-			Humanoid.new({
+		$entities.concat([
+			Npc.new({
 				name: 'Aurelion',
 				x: 120,
-				y: 100,
+				y: WINDOW_HEIGHT - BASE_HEIGHT - 20,
 				z: 1,
-				sprite: './assets/sprites/theus.png'
+				path: './assets/sprites/theus.png'
 			})
-		]
+		])
 
 		@spawn_point = {
-			x: units_to_pixels(100),
-			y: units_to_pixels(WINDOW_HEIGHT - BASE_HEIGHT - 20)
+			x: 100,
+			y: WINDOW_HEIGHT - BASE_HEIGHT - 20
 		}
 
 		super(@constant_objects)

@@ -1,10 +1,13 @@
 # Game libraries
 require 'ruby2d'
 require 'pry'
+require 'observer'
 
 # Core
 require_relative 'helpers'
 require_relative 'camera'
+require_relative '../models/base/humanoid'
+require_relative '../models/base/collision_box'
 require_relative '../models/base/tile'
 require_relative '../models/base/game_text'
 require_relative '../models/base/collidable'
@@ -43,7 +46,7 @@ $camera = Camera.new({
   width: units_to_pixels(WINDOW_WIDTH),
   height: units_to_pixels(WINDOW_HEIGHT)
 })
-
+$entities = []
 $skybox = Skybox.new(x: 0, y: 0, z: -10, path: './assets/backgrounds/town.png')
 $skybox.width = units_to_pixels($skybox.width)
 $skybox.height = units_to_pixels($skybox.height)

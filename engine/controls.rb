@@ -3,13 +3,13 @@ on :key_down do |e|
     case e.key
       when "a"
         # Don't allow the player to walk off the level
-        unless $player.x <= $level.x || !$player.can_move(:left)
+        unless $player.collision_box.x <= $level.x || !$player.can_move(:left)
           $player.move_left
           update_camera
         end
       when "d"
         # Don't allow the player to walk off the level
-        unless $player.x + $player.width >= $level.x + $level.width || !$player.can_move(:right)
+        unless $player.collision_box.x + $player.collision_box.width >= $level.x + $level.width || !$player.can_move(:right)
           $player.move_right
           update_camera
         end
@@ -36,13 +36,13 @@ on :key_held do |e|
     case e.key
       when 'a'
         # Don't allow the player to walk off the level
-        unless $player.x <= $level.x || !$player.can_move(:left)
+        unless $player.collision_box.x <= $level.x || !$player.can_move(:left)
           $player.move_left
           update_camera
         end
       when 'd'
         # Don't allow the player to walk off the level
-        unless $player.x + $player.width >= $level.x + $level.width || !$player.can_move(:right)
+        unless $player.collision_box.x + $player.collision_box.width >= $level.x + $level.width || !$player.can_move(:right)
           $player.move_right
           update_camera
         end

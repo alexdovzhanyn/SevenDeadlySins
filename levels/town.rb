@@ -90,7 +90,16 @@ class Town < Level
 				x: 120,
 				y: WINDOW_HEIGHT - BASE_HEIGHT - 20,
 				z: 1,
-				path: './assets/sprites/theus.png'
+				path: './assets/sprites/aurelion.png',
+				interact_action: ->(context){ 
+					ChatBubble.new({
+						x: context.collision_box ? context.collision_box.x + context.collision_box.width : context.x + context.width/2, 
+						y: context.collision_box ? context.collision_box.y + 25 : context.y, 
+						z: context.collision_box ? context.collision_box.z : context.z, 
+						timeout: 120,
+						text: "Hey there, buddy"
+					})
+				},
 			})
 		])
 

@@ -2,6 +2,7 @@ update do
   if $player.health > 0
     update_player
     update_entities
+    update_misc
   else
     $game_end_bg.color = [0,0,0,0.8]
     $game_end_text.color = [1,0,0,1]
@@ -25,39 +26,6 @@ def update_player
   end
 
   $player.health_text.text = $player.health > 0 ? $player.health : 0
-
-  # # Handles jumping and gravity
-  # if $player.can_move(:down)
-  #   $player.velocityY -= GRAVITY
-
-  #   # Check if player should hit something between this frame and the next
-  #   # This is done by projecting the players position values in between frames
-  #   $player.velocityY.abs.ceil.times do |position|
-  #     temp_player = $player.clone
-  #     temp_player.y += position
-
-  #     if !temp_player.can_move(:down)
-  #       $player.y = temp_player.y
-  #       $player.velocityY = 0
-  #       break
-  #     end
-  #   end
-
-  #   $player.velocityY.abs.ceil.times do |position|
-  #     temp_player = $player.clone
-  #     temp_player.y -= position
-
-  #     if !temp_player.can_move(:up)
-  #       $player.y = temp_player.y + 1
-  #       $player.velocityY = $player.velocityY > 0 ? 0 : $player.velocityY
-  #       break
-  #     end
-  #   end
-
-  #   $player.y -= $player.velocityY
-  # else
-  #   $player.velocityY = 0
-  # end
 end
 
 def update_camera
@@ -75,10 +43,14 @@ def update_entities
     # entity.breathe
 
     if entity.respond_to?(:destination)
-      if entity.destination != nil
-        entity.walk_to_destination
+      if entity.idle_timer == 0
+        if entity.destination != nil
+          entity.walk_to_destination
+        else
+          entity.generate_destination
+        end
       else
-        entity.generate_destination
+        entity.idle_timer -= 1
       end
     end
 
@@ -114,6 +86,16 @@ def update_entities
       entity.collision_box.y -= entity.collision_box.velocityY
     else
       entity.collision_box.velocityY = 0
+    end
+  end
+
+  def update_misc
+    Application.get(:window).objects.select{|object| object.kind_of? ChatBubble}.each do |bubble|
+      if bubble.timeout && bubble.timeout == 0
+        bubble.remove_self
+      elsif bubble.timeout
+        bubble.timeout -= 1
+      end
     end
   end
 end

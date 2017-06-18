@@ -12,6 +12,18 @@ class Town < Level
 				color: [0,0,0,0], 
 				tile: './assets/tiles/grass_top.png'
 			}),
+			Chest.new({
+				x: units_to_pixels(10),
+				y: units_to_pixels(WINDOW_HEIGHT - BASE_HEIGHT*2 - 9),
+				z: 0,
+				items: [
+					Sword.new({
+						name: 'Rusty Dagger',
+						damage: 0.5,
+						icon: './assets/interface/icons/weapons/rusty_sword.png'
+					})
+				]
+			}),
 			Platform.new({
 				x: 60, 
 				y: 100, 

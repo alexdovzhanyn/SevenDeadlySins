@@ -97,5 +97,17 @@ def update_entities
         bubble.timeout -= 1
       end
     end
+
+    Application.get(:window).objects.select{|object| object.kind_of? InterfaceRectangle}.each do |item|
+      if item.respond_to?(:has_mouseover_function) && item.has_mouseover_function
+        if Application.get(:window).mouse_x >= item.x && Application.get(:window).mouse_x <= item.x + item.width && Application.get(:window).mouse_y >= item.y && Application.get(:window).mouse_y <= item.y + item.height
+          item.moused_over = true
+          item.mouseover.call
+        elsif item.moused_over
+          item.moused_over = false
+          item.mouseleave.call
+        end
+      end
+    end
   end
 end

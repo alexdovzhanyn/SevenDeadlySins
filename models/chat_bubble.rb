@@ -14,7 +14,7 @@ class ChatBubble < Image
 			x: self.x + 20,
 			y: self.y + 5,
 			z: self.z + 1,
-			font: './assets/fonts/Ubuntu-B.ttf',
+			font: GAME_FONT,
 			color: [0,0,0,1],
 			text: opts[:text],
 			size: 10

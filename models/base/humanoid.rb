@@ -15,7 +15,7 @@ class Humanoid
 		@collision_box.add_observer(self, :update_sprite)
 
 		@name = opts[:name]
-		@name_text = GameText.new({x: @sprite.x, y: @sprite.y - 50, z: @sprite.z, text: @name, color: 'white', font: './assets/fonts/Ubuntu-B.ttf'})
+		@name_text = GameText.new({x: @sprite.x, y: @sprite.y - 50, z: @sprite.z, text: @name, color: 'white', font: GAME_FONT})
 		@name_text.x = (@sprite.x + @sprite.width/2) - @name_text.width/2
 	end
 

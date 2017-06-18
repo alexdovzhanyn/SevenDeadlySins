@@ -8,8 +8,8 @@ class Player < Humanoid
   def initialize(opts={})
     super(opts)
 
-    GameText.new({x: 10, y: 10, z: 0, font: './assets/fonts/Ubuntu-B.ttf', text: opts[:name] || 'Player', fixed_position: true})
-    @health_text = GameText.new({x: 10, y: 30, z: 0, font: './assets/fonts/Ubuntu-B.ttf', text: opts[:health], fixed_position: true})
+    GameText.new({x: 10, y: 10, z: 0, font: GAME_FONT, text: opts[:name] || 'Player', fixed_position: true})
+    @health_text = GameText.new({x: 10, y: 30, z: 0, font: GAME_FONT, text: opts[:health], fixed_position: true})
     @velocityY = 0
     @health = opts[:health]
     @inventory = Inventory.new

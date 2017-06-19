@@ -5,6 +5,7 @@ require 'observer'
 
 # Core
 require_relative 'helpers'
+require_relative '../models/base/game_mouse'
 require_relative 'camera'
 require_relative '../models/base/interface_rectangle'
 require_relative '../models/base/interface_image'
@@ -23,6 +24,7 @@ require_relative '../models/base/weapon'
 # All other models
 Dir["./models/*.rb"].each {|file| require file }
 Dir["./models/entities/*.rb"].each {|file| require file }
+Dir["./models/controllers/*.rb"].each {|file| require file }
 Dir["./models/*/*/*.rb"].each {|file| require file }
 
 # Load levels
@@ -53,7 +55,18 @@ $camera = Camera.new({
   width: units_to_pixels(WINDOW_WIDTH),
   height: units_to_pixels(WINDOW_HEIGHT)
 })
+
+$mouse = GameMouse.new({
+	x: 0,
+	y: 0,
+	z: 100,
+	width: 0,
+	height: 0,
+	color: [0,0,0,0]
+})
+
 $entities = []
+$interface_controller = InterfaceController.new
 $skybox = Skybox.new(x: 0, y: 0, z: -10, path: './assets/backgrounds/town.png')
 $skybox.width = units_to_pixels($skybox.width)
 $skybox.height = units_to_pixels($skybox.height)

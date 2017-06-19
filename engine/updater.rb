@@ -109,5 +109,8 @@ def update_entities
         end
       end
     end
+
+    $mouse.x = Application.get(:window).mouse_x
+    $mouse.y = Application.get(:window).mouse_y
   end
 end

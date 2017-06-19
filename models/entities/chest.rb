@@ -33,18 +33,12 @@ class Chest < Collidable
 
 	def toggle_interior
 		if self.open
-			self.open = false
-			@interior.remove
-			@slots.each do |slot|
-				if slot.item
-					slot.icon.remove
-				end
-
-				slot.remove
-			end
+			$interface_controller.remove_item(self)
 		else
 			self.open = true
-			@interior = InterfaceImage.new({x: 100, y: 100, z: 0, path: './assets/interface/container_interior.png'})
+			$interface_controller.add_item(self)
+
+			@interior = InterfaceImage.new({x: 100, y: units_to_pixels(WINDOW_HEIGHT/2 - 92/2), z: 0, path: './assets/interface/container_interior.png'})
 			@interior.width = units_to_pixels(@interior.width)
 			@interior.height = units_to_pixels(@interior.height)
 			@slots = []
@@ -57,7 +51,7 @@ class Chest < Collidable
 					offset_y += 11
 				end
 
-				@slots << ChestSlot.new({
+				@slots << ContainerSlot.new({
 					x: @interior.x + units_to_pixels(3 + offset_x), 
 					y: @interior.y + units_to_pixels(3 + offset_y), 
 					z: @interior.z + 1, 
@@ -72,7 +66,7 @@ class Chest < Collidable
 							@tooltip = GameText.new({
 								x: @slots[i].x + @slots[i].width + 10, 
 								y: @slots[i].y, 
-								z: @slots[i].z + 1,
+								z: @slots[i].z + 6,
 								text: @slots[i].item.name,
 								font: GAME_FONT,
 								size: 12,
@@ -86,11 +80,52 @@ class Chest < Collidable
 							@tooltip.remove
 							@tooltip = nil
 						end
+					}, 
+					mouseclick: ->() {
+						if @slots[i].item
+							self.items.delete_at(i)
+
+							if $mouse.attached_item
+								temp_item = $mouse.attached_item
+								self.items[i] = temp_item
+
+								puts "added item"
+							end
+
+							$mouse.attached_item = @slots[i].item
+							@slots[i].item = temp_item || nil
+
+							if @tooltip
+								@tooltip.remove
+							end
+						elsif !@slots[i].item && $mouse.attached_item
+							@slots[i].item = $mouse.attached_item
+							self.items[i] = $mouse.attached_item
+
+							$mouse.attached_item = nil
+						end
 					}
 				})
 
 				offset_x += 11
 			end
+		end
+	end
+
+	def remove_visuals
+		self.open = false
+		@interior.remove
+		@slots.each do |slot|
+			if slot.item
+				slot.icon.remove
+			end
+
+			slot.remove
+		end
+
+		if @tooltip
+			@tooltip.remove
+			@tooltip = nil
 		end
 	end
 

@@ -43,3 +43,16 @@ on :key_held do |e|
     end
   end
 end
+
+on :mouse_down do |e|
+  unless $player.health < 0
+    case e.button
+      when :left
+        Application.get(:window).objects.select{|object| object.kind_of? InterfaceRectangle}.each do |item|
+          if Application.get(:window).mouse_x >= item.x && Application.get(:window).mouse_x <= item.x + item.width && Application.get(:window).mouse_y >= item.y && Application.get(:window).mouse_y <= item.y + item.height
+            item.mouseclick.call
+          end
+        end
+    end
+  end
+end

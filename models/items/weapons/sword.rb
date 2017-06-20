@@ -3,7 +3,6 @@ class Sword < Weapon
 
 	def initialize(opts={})
 		super(opts)
-
 		@name = opts[:name]
 	end
 

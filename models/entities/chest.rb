@@ -8,7 +8,7 @@ class Chest < Collidable
 			x: opts[:x],
 			y: opts[:y],
 			z: opts[:z],
-			path: opts[:sprite] || './assets/sprites/chest.png'
+			path: opts[:sprite] || './assets/sprites/chest1.png'
 		})
 
 		@sprite.width = units_to_pixels(@sprite.width)

@@ -1,5 +1,5 @@
 class Humanoid
-	attr_accessor :collision_box, :sprite, :health
+	attr_accessor :collision_box, :sprite, :health, :name
 
 	def initialize(opts={})
 		opts[:x] = units_to_pixels(opts[:x])

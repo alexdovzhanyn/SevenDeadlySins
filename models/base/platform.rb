@@ -8,7 +8,7 @@ class Platform
 		@tiles = []
 
 		opts[:width].times do |count|
-			@tiles << Tile.new({x: opts[:x] + (units_to_pixels(5) * count), y: opts[:y], z: opts[:z], path: opts[:tile]})
+			@tiles << Tile.new({x: opts[:x] + (units_to_pixels(5) * count), y: opts[:y], z: opts[:z], path: "./assets/tiles/grass_top#{rand(1..5)}.png"})
 		end
 	end
 

@@ -74,7 +74,6 @@ class Player < Humanoid
 
         @slots = []
 
-
         offset_x = 0
         offset_y = 0
         56.times do |i|

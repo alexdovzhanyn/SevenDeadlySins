@@ -21,6 +21,8 @@ on :key_down do |e|
         $player.inventory.toggle
       when 'e'
         $player.interact
+      when 's'
+        SaveManager.save
     end
   end
 end

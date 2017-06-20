@@ -10,7 +10,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 40, 
 				color: [0,0,0,0], 
-				tile: './assets/tiles/grass_top.png'
+				tile: './assets/tiles/grass_top1.png'
 			}),
 			Chest.new({
 				x: units_to_pixels(10),
@@ -53,7 +53,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000', 
-				tile: './assets/tiles/grass_top.png'
+				tile: './assets/tiles/grass_top1.png'
 			}),
 			Platform.new({
 				x: 160, 
@@ -62,7 +62,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top.png'
+				tile: './assets/tiles/grass_top1.png'
 			}),
 			Platform.new({
 				x: 250, 
@@ -71,7 +71,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top.png'
+				tile: './assets/tiles/grass_top1.png'
 			}),
 			Collidable.new({
 				x: units_to_pixels(320), 
@@ -96,7 +96,7 @@ class Town < Level
 				height: 8, 
 				width: 24, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top.png'
+				tile: './assets/tiles/grass_top1.png'
 			}),
 			DamageBlock.new({
 				x: 200, 
@@ -114,28 +114,28 @@ class Town < Level
 				height: 35, 
 				width: 24, 
 				color: [0,0,0,0],
-				sprite: './assets/sprites/wooden_door.png'
+				sprite: './assets/sprites/wooden_door1.png'
 			})
 		]
 
-		$entities.concat([
-			Npc.new({
-				name: 'Aurelion',
-				x: 120,
-				y: WINDOW_HEIGHT - BASE_HEIGHT - 20,
-				z: 1,
-				path: './assets/sprites/aurelion.png',
-				interact_action: ->(context){ 
-					ChatBubble.new({
-						x: context.collision_box ? context.collision_box.x + context.collision_box.width : context.x + context.width/2, 
-						y: context.collision_box ? context.collision_box.y + 25 : context.y, 
-						z: context.collision_box ? context.collision_box.z : context.z, 
-						timeout: 120,
-						text: "Hey there, buddy"
-					})
-				},
-			})
-		])
+		# $entities.concat([
+		# 	Npc.new({
+		# 		name: 'Aurelion',
+		# 		x: 120,
+		# 		y: WINDOW_HEIGHT - BASE_HEIGHT - 20,
+		# 		z: 1,
+		# 		path: './assets/sprites/aurelion.png',
+		# 		interact_action: ->(context){ 
+		# 			ChatBubble.new({
+		# 				x: context.collision_box ? context.collision_box.x + context.collision_box.width : context.x + context.width/2, 
+		# 				y: context.collision_box ? context.collision_box.y + 25 : context.y, 
+		# 				z: context.collision_box ? context.collision_box.z : context.z, 
+		# 				timeout: 120,
+		# 				text: "Hey there, buddy"
+		# 			})
+		# 		},
+		# 	})
+		# ])
 
 		@spawn_point = {
 			x: 100,

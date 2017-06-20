@@ -20,3 +20,7 @@ end
 def units_to_pixels(units)
   return units * 5
 end
+
+def pixels_to_units(pixels)
+  return pixels / 5
+end

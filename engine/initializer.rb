@@ -25,6 +25,7 @@ require_relative '../models/base/weapon'
 # All other models
 Dir["./models/*.rb"].each {|file| require file }
 Dir["./models/entities/*.rb"].each {|file| require file }
+Dir["./interface/*.rb"].each {|file| require file }
 Dir["./models/controllers/*.rb"].each {|file| require file }
 Dir["./models/*/*/*.rb"].each {|file| require file }
 
@@ -50,58 +51,71 @@ set({
   background: '#99ccff'
 })
 
-existing_saves = SaveManager.find_existing_saves
+class Initializer
+  def self.start
+    existing_saves = SaveManager.find_existing_saves
 
-$entities = []
-$level = Town.new
+    $entities = []
+    $level = Town.new
 
-if !existing_saves.empty?
-  save = SaveManager.load(existing_saves[0])
+    $camera = Camera.new({
+      x: 0,
+      y: 0,
+      width: units_to_pixels(WINDOW_WIDTH),
+      height: units_to_pixels(WINDOW_HEIGHT)
+    })
 
-  $player = Player.new({
-    x: pixels_to_units(save[:player][:x]),
-    y: pixels_to_units(save[:player][:y]),
-    z: save[:player][:z],
-    health: save[:player][:health],
-    path: './assets/sprites/theus.png',
-    name: save[:player][:name]
-  })
+    if !existing_saves.empty?
+      save = SaveManager.load(existing_saves[0])
 
-  $player.inventory.items = Marshal::load(save[:player][:inventory][:items])
-else
-  $player = Player.new({
-    x: $level.spawn_point[:x], 
-    y: $level.spawn_point[:y] - Player::HEIGHT, 
-    z: 5, 
-    health: 100,
-    path: './assets/sprites/theus.png',
-    name: 'Theus'
-  })
+      $player = Player.new({
+        x: pixels_to_units(save[:player][:x]),
+        y: pixels_to_units(save[:player][:y]),
+        z: save[:player][:z],
+        health: save[:player][:health],
+        path: './assets/sprites/theus.png',
+        name: save[:player][:name]
+      })
+
+      $player.inventory.items = Marshal::load(save[:player][:inventory][:items])
+      $camera.move(save[:level][:distance_from_origin_x], save[:level][:distance_from_origin_y], $level)
+
+      Application.get(:window).objects.select{|obj| obj.kind_of? Chest}.each do |chest|
+        chest.items = Marshal::load(save[:level][:interactable_objects][:chests][chest.id.to_s.to_sym])
+      end
+    else
+      $player = Player.new({
+        x: $level.spawn_point[:x], 
+        y: $level.spawn_point[:y] - Player::HEIGHT, 
+        z: 5, 
+        health: 100,
+        path: './assets/sprites/theus.png',
+        name: 'Theus'
+      })
+    end
+
+    $mouse = GameMouse.new({
+    	x: 0,
+    	y: 0,
+    	z: 100,
+    	width: 0,
+    	height: 0,
+    	color: [0,0,0,0]
+    })
+
+    $interface_controller = InterfaceController.new
+    $game_menu = GameMenu.new
+    $game_over = GameOver.new
+    $skybox = Skybox.new(x: 0, y: 0, z: -10, path: './assets/backgrounds/town1.png')
+    $skybox.width = units_to_pixels($skybox.width)
+    $skybox.height = units_to_pixels($skybox.height)
+  end
+
+  def self.restart
+    Application.get(:window).objects.length.times do
+      Application.get(:window).objects[0].remove
+    end
+
+    self.start
+  end
 end
-
-$camera = Camera.new({
-  x: 0,
-  y: 0,
-  width: units_to_pixels(WINDOW_WIDTH),
-  height: units_to_pixels(WINDOW_HEIGHT)
-})
-
-$mouse = GameMouse.new({
-	x: 0,
-	y: 0,
-	z: 100,
-	width: 0,
-	height: 0,
-	color: [0,0,0,0]
-})
-
-$interface_controller = InterfaceController.new
-$skybox = Skybox.new(x: 0, y: 0, z: -10, path: './assets/backgrounds/town1.png')
-$skybox.width = units_to_pixels($skybox.width)
-$skybox.height = units_to_pixels($skybox.height)
-
-$game_end_bg = Rectangle.new(x: 0, y: 0, z: 100000, width: units_to_pixels(WINDOW_WIDTH), height: units_to_pixels(WINDOW_HEIGHT), color: [0,0,0,0])
-$game_end_text = GameText.new({x: units_to_pixels(WINDOW_WIDTH/2), y: units_to_pixels(WINDOW_HEIGHT/2), z: 100001, font: GAME_FONT, text: 'You Died :(', color: [1,0,0,0], size: 80})
-
-
-

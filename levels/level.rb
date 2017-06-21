@@ -2,7 +2,6 @@ class Level
 	attr_accessor :x, :y, :width
 
 	def initialize(objects)
-		puts "Initializing level..."
 		lowest_x = 0
 		highest_x = 0
 

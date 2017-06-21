@@ -13,6 +13,7 @@ class Town < Level
 				tile: './assets/tiles/grass_top1.png'
 			}),
 			Chest.new({
+				id: 1,
 				x: units_to_pixels(10),
 				y: units_to_pixels(WINDOW_HEIGHT - BASE_HEIGHT*2 - 9),
 				z: 0,
@@ -25,6 +26,7 @@ class Town < Level
 				]
 			}),
 			Chest.new({
+				id: 2,
 				x: units_to_pixels(80),
 				y: units_to_pixels(WINDOW_HEIGHT - BASE_HEIGHT*2 - 9),
 				z: 0,

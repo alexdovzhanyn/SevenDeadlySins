@@ -1,18 +1,17 @@
 update do
-  if $player.health > 0
+  if $player.health > 0 && !$game_menu.open
     update_player
     update_entities
     update_misc
+  elsif $player.health > 0 && $game_menu.open
+    
   else
-    $game_end_bg.color = [0,0,0,0.8]
-    $game_end_text.color = [1,0,0,1]
-
-    # Reposition text after we know its height & width to center it
-    $game_end_text.x = units_to_pixels(WINDOW_WIDTH/2) - $game_end_text.width/2
-    $game_end_text.y = units_to_pixels(WINDOW_HEIGHT/2) - $game_end_text.height/2
-    $game_end_bg.x = $camera.x
-    $game_end_bg.y = $camera.y
+    unless $game_over.shown
+      $game_over.open
+    end
   end
+
+  update_misc
 end
 
 def update_player

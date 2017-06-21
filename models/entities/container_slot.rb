@@ -21,6 +21,10 @@ class ContainerSlot < InterfaceRectangle
 		@item = item
 
 		if @item
+			if self.icon
+				self.icon.remove
+			end
+			
 			@icon = InterfaceImage.new({
 				x: temp_icon_values.x,
 				y: temp_icon_values.y,

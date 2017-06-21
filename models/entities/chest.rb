@@ -1,5 +1,5 @@
 class Chest < Collidable
-	attr_accessor :items, :open
+	attr_accessor :items, :open, :id
 
 	def initialize(opts={})
 		@open = false
@@ -25,6 +25,8 @@ class Chest < Collidable
 			},
 			color: [0,0,0,0]
 		})
+
+		@id = opts[:id]
 
 
 		opts[:prevent_collision] = true
@@ -83,7 +85,8 @@ class Chest < Collidable
 					}, 
 					mouseclick: ->() {
 						if @slots[i].item
-							self.items.delete_at(i)
+							# Self is chest, @slots is the specific slot
+							self.items[i] = nil
 
 							if $mouse.attached_item
 								temp_item = $mouse.attached_item

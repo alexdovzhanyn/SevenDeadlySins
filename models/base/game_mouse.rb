@@ -9,6 +9,10 @@ class GameMouse < Rectangle
 	end
 
 	def attached_item=(item)
+		if @attached_item
+			@attached_icon.remove
+		end
+
 		@attached_item = item
 
 		if @attached_item

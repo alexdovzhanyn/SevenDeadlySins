@@ -10,7 +10,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 40, 
 				color: [0,0,0,0], 
-				tile: './assets/tiles/grass_top1.png'
+				tile: './assets/tiles/grass_top_1.png'
 			}),
 			Chest.new({
 				id: 1,
@@ -55,7 +55,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000', 
-				tile: './assets/tiles/grass_top1.png'
+				tile: './assets/tiles/grass_top_1.png'
 			}),
 			Platform.new({
 				x: 160, 
@@ -64,7 +64,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top1.png'
+				tile: './assets/tiles/grass_top_1.png'
 			}),
 			Platform.new({
 				x: 250, 
@@ -73,7 +73,7 @@ class Town < Level
 				height: BASE_HEIGHT, 
 				width: 8, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top1.png'
+				tile: './assets/tiles/grass_top_1.png'
 			}),
 			Collidable.new({
 				x: units_to_pixels(320), 
@@ -98,7 +98,7 @@ class Town < Level
 				height: 8, 
 				width: 24, 
 				color: '#008000',
-				tile: './assets/tiles/grass_top1.png'
+				tile: './assets/tiles/grass_top_1.png'
 			}),
 			DamageBlock.new({
 				x: 200, 
